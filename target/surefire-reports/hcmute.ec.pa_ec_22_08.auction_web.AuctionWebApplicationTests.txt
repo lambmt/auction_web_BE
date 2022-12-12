@@ -1,0 +1,9 @@
+-------------------------------------------------------------------------------
+Test set: hcmute.ec.pa_ec_22_08.auction_web.AuctionWebApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 9.818 s <<< FAILURE! - in hcmute.ec.pa_ec_22_08.auction_web.AuctionWebApplicationTests
+contextLoads  Time elapsed: 0.002 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is org.hibernate.DuplicateMappingException: Table [product_image] contains physical column name [product_image_id] referred to by multiple logical column names: [product_image_id], [productImageId]
+Caused by: org.hibernate.DuplicateMappingException: Table [product_image] contains physical column name [product_image_id] referred to by multiple logical column names: [product_image_id], [productImageId]
+
