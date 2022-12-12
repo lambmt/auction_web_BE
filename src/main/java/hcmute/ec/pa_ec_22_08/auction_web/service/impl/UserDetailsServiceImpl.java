@@ -5,15 +5,12 @@ import hcmute.ec.pa_ec_22_08.auction_web.entity.User;
 import hcmute.ec.pa_ec_22_08.auction_web.enumuration.Role;
 import hcmute.ec.pa_ec_22_08.auction_web.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

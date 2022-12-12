@@ -58,7 +58,7 @@ public class User extends AbstractAuditingEntity{
     @Column(name = "avatar_url")
     private String avatarUrl;
 
-    @Column(name = "avatar_url")
+    @Column(name = "address")
     private String address;
 
     @Column(name = "day_of_birth")
