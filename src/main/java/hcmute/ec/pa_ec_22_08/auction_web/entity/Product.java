@@ -21,23 +21,11 @@ public class Product extends AbstractAuditingEntity{
     private Long productId;
 
     private String productName;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id")
     private Category category;
-
     private BigDecimal price;
     private int quantity;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @OneToMany
-    @JoinColumn(name = "product_image_id")
+    private String username;
     private List<ProductImage> productImages;
-
-
     private ProductStatus productStatus;
     private boolean delFrag;
 }

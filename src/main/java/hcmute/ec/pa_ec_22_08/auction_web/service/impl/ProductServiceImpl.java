@@ -1,26 +1,69 @@
 package hcmute.ec.pa_ec_22_08.auction_web.service.impl;
 
+import hcmute.ec.pa_ec_22_08.auction_web.dto.req.ProductReqDTO;
 import hcmute.ec.pa_ec_22_08.auction_web.entity.Product;
+import hcmute.ec.pa_ec_22_08.auction_web.entity.ProductImage;
+import hcmute.ec.pa_ec_22_08.auction_web.enumuration.ProductStatus;
+import hcmute.ec.pa_ec_22_08.auction_web.mapper.ProductMapper;
 import hcmute.ec.pa_ec_22_08.auction_web.repository.ProductRepository;
 import hcmute.ec.pa_ec_22_08.auction_web.service.ProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
+    Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
+
     private final ProductRepository productRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository) {
+    private final ProductMapper productMapper;
+
+    public ProductServiceImpl(ProductRepository productRepository,
+                              ProductMapper productMapper) {
         this.productRepository = productRepository;
+        this.productMapper = productMapper;
     }
 
     @Override
-    public Product saveProduct(Product product) {
-        productRepository.save(product);
-        return product;
+    public Product saveProduct(ProductReqDTO productReqDTO) throws Exception {
+        log.info("Start save product into database");
+        if (productReqDTO.getQuantity() > 0) {
+            if (productReqDTO.isCreated()) {
+                Product product = productMapper.toEntity(productReqDTO);
+                product.setProductStatus(ProductStatus.WAITING_FOR_APPROVE);
+                productRepository.save(product);
+                return product;
+            } else {
+                Optional<Product> productOptional = productRepository.findByProductId(productReqDTO.getProductId());
+                if (productOptional.isPresent() && !productOptional.get().isDelFrag()) {
+                    Product existedProduct = productOptional.get();
+                    Long productId = existedProduct.getProductId();
+                    existedProduct.setProductStatus(ProductStatus.WAITING_FOR_APPROVE);
+                    existedProduct.setProductName(productReqDTO.getProductName());
+                    existedProduct.setCategory(productReqDTO.getCategory());
+                    existedProduct.setQuantity(productReqDTO.getQuantity());
+                    List<ProductImage> productImages = new ArrayList<>();
+                    productReqDTO.getImages().forEach(imageURL -> {
+                        ProductImage productImage = new ProductImage();
+                        productImage.setProductId(productId);
+                        productImage.setImageUrl(imageURL);
+                        productImages.add(productImage);
+                    });
+                    existedProduct.setProductImages(productImages);
+                    productRepository.save(existedProduct);
+                    return existedProduct;
+                }
+            }
+        } else {
+            throw new Exception("Quantity must be more than 0");
+        }
+        return null;
     }
 
     @Override

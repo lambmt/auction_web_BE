@@ -15,9 +15,7 @@ public class ProductImage {
     @Column(name = "product_image_id")
     private Long productImageId;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    private Long productId;
 
     private String imageUrl;
 }

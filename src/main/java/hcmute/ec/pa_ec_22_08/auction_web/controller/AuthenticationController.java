@@ -40,7 +40,7 @@ public class AuthenticationController {
         return new ResponseEntity<>(MessageConstant.SIGN_IN_SUCCESS, HttpStatus.OK);
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody SignUpDTO signUpDTO) {
 
         // add check for username exists in a DB
@@ -68,5 +68,4 @@ public class AuthenticationController {
 
         return new ResponseEntity<>(MessageConstant.SIGN_UP_SUCCESS, HttpStatus.OK);
     }
-
 }

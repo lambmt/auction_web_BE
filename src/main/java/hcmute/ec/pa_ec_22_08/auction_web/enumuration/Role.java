@@ -8,7 +8,8 @@ import java.util.stream.DoubleStream;
 
 public enum Role implements Collection<GrantedAuthority> {
     ADMIN("ADMIN"),
-    CUSTOMER("CUSTOMER");
+    CUSTOMER("CUSTOMER"),
+    VENDOR("VENDOR");
 
     private final String value;
 

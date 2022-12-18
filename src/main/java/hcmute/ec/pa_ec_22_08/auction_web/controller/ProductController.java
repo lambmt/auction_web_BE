@@ -1,9 +1,12 @@
 package hcmute.ec.pa_ec_22_08.auction_web.controller;
 
+import hcmute.ec.pa_ec_22_08.auction_web.dto.req.ProductReqDTO;
 import hcmute.ec.pa_ec_22_08.auction_web.entity.Product;
 import hcmute.ec.pa_ec_22_08.auction_web.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.protocol.HTTP;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,8 +15,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/auction/product")
-@Slf4j
 public class ProductController {
+
+    Logger log = LoggerFactory.getLogger(ProductController.class);
 
     private final ProductService productService;
 
@@ -23,9 +27,9 @@ public class ProductController {
 
 
     @PostMapping("/save")
-    public ResponseEntity<Product> saveProduct(Product product) {
+    public ResponseEntity<Product> saveProduct(ProductReqDTO productReqDTO) throws Exception {
         log.info("REST ful api to create product");
-        return ResponseEntity.ok(productService.saveProduct(product));
+        return ResponseEntity.ok(productService.saveProduct(productReqDTO));
     }
 
     @GetMapping("/list-product")

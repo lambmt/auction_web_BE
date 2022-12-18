@@ -8,11 +8,11 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(ProductImage.class)
 public abstract class ProductImage_ {
 
-	public static volatile SingularAttribute<ProductImage, Product> product;
+	public static volatile SingularAttribute<ProductImage, Long> productId;
 	public static volatile SingularAttribute<ProductImage, String> imageUrl;
 	public static volatile SingularAttribute<ProductImage, Long> productImageId;
 
-	public static final String PRODUCT = "product";
+	public static final String PRODUCT_ID = "productId";
 	public static final String IMAGE_URL = "imageUrl";
 	public static final String PRODUCT_IMAGE_ID = "productImageId";
 

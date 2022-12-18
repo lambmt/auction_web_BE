@@ -28,5 +28,5 @@ public class Auction extends AbstractAuditingEntity {
     private BigDecimal startPrice;
     private BigDecimal endPrice;
     private AuctionStatus auctionStatus;
-    private boolean delFrag;
+    private boolean delFrag = false;
 }

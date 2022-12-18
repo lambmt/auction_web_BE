@@ -17,9 +17,8 @@ public abstract class Product_ extends hcmute.ec.pa_ec_22_08.auction_web.entity.
 	public static volatile SingularAttribute<Product, Long> productId;
 	public static volatile SingularAttribute<Product, BigDecimal> price;
 	public static volatile SingularAttribute<Product, ProductStatus> productStatus;
-	public static volatile SingularAttribute<Product, Category> category;
-	public static volatile SingularAttribute<Product, User> user;
 	public static volatile SingularAttribute<Product, String> productName;
+	public static volatile SingularAttribute<Product, String> username;
 
 	public static final String DEL_FRAG = "delFrag";
 	public static final String PRODUCT_IMAGES = "productImages";
@@ -27,9 +26,8 @@ public abstract class Product_ extends hcmute.ec.pa_ec_22_08.auction_web.entity.
 	public static final String PRODUCT_ID = "productId";
 	public static final String PRICE = "price";
 	public static final String PRODUCT_STATUS = "productStatus";
-	public static final String CATEGORY = "category";
-	public static final String USER = "user";
 	public static final String PRODUCT_NAME = "productName";
+	public static final String USERNAME = "username";
 
 }
 
