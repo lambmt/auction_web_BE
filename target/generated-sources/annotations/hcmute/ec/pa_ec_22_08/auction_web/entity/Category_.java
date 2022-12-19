@@ -10,12 +10,12 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class Category_ extends hcmute.ec.pa_ec_22_08.auction_web.entity.AbstractAuditingEntity_ {
 
 	public static volatile SingularAttribute<Category, CategoryType> categoryType;
+	public static volatile SingularAttribute<Category, Long> id;
 	public static volatile SingularAttribute<Category, String> categoryName;
-	public static volatile SingularAttribute<Category, Long> categoryId;
 
 	public static final String CATEGORY_TYPE = "categoryType";
+	public static final String ID = "id";
 	public static final String CATEGORY_NAME = "categoryName";
-	public static final String CATEGORY_ID = "categoryId";
 
 }
 

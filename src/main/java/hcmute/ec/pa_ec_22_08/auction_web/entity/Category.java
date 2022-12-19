@@ -14,7 +14,7 @@ public class Category extends AbstractAuditingEntity {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long categoryId;
+    private Long id;
 
     private String categoryName;
     private CategoryType categoryType;

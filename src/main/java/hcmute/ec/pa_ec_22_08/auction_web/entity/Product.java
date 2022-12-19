@@ -17,15 +17,14 @@ import java.util.List;
 public class Product extends AbstractAuditingEntity{
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name = "product_id")
-    private Long productId;
+    private Long id;
 
     private String productName;
+    @ManyToOne
     private Category category;
     private BigDecimal price;
     private int quantity;
     private String username;
-    private List<ProductImage> productImages;
     private ProductStatus productStatus;
     private boolean delFrag;
 }

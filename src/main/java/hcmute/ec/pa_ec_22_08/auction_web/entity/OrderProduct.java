@@ -9,14 +9,14 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "order")
+@Table(name = "order_product")
 @Getter
 @Setter
 @ToString
-public class Order extends AbstractAuditingEntity {
+public class OrderProduct extends AbstractAuditingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long orderId;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "product_id")

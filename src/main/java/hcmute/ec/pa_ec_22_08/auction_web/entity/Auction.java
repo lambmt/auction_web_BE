@@ -15,14 +15,14 @@ import java.time.LocalDateTime;
 public class Auction extends AbstractAuditingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long auctionId;
+    private Long id;
 
     private String sellerId;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
-    private String categoryId;
+    private Long categoryId;
     private LocalDateTime startTime;
     private LocalDateTime finishTime;
     private BigDecimal startPrice;

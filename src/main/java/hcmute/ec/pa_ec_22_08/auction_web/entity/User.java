@@ -30,6 +30,7 @@ public class User extends AbstractAuditingEntity{
     private String username;
 
     @OneToOne
+    @JoinColumn(name = "password_id")
     private Password password;
 
     @NotNull

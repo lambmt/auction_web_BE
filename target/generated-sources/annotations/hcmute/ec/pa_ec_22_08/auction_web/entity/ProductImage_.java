@@ -10,11 +10,11 @@ public abstract class ProductImage_ {
 
 	public static volatile SingularAttribute<ProductImage, Long> productId;
 	public static volatile SingularAttribute<ProductImage, String> imageUrl;
-	public static volatile SingularAttribute<ProductImage, Long> productImageId;
+	public static volatile SingularAttribute<ProductImage, Long> id;
 
 	public static final String PRODUCT_ID = "productId";
 	public static final String IMAGE_URL = "imageUrl";
-	public static final String PRODUCT_IMAGE_ID = "productImageId";
+	public static final String ID = "id";
 
 }
 

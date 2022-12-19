@@ -4,7 +4,6 @@ import hcmute.ec.pa_ec_22_08.auction_web.dto.req.ProductReqDTO;
 import hcmute.ec.pa_ec_22_08.auction_web.entity.Product;
 import hcmute.ec.pa_ec_22_08.auction_web.entity.ProductImage;
 import hcmute.ec.pa_ec_22_08.auction_web.enumuration.ProductStatus;
-import hcmute.ec.pa_ec_22_08.auction_web.mapper.ProductMapper;
 import hcmute.ec.pa_ec_22_08.auction_web.repository.ProductRepository;
 import hcmute.ec.pa_ec_22_08.auction_web.service.ProductService;
 import org.slf4j.Logger;
@@ -22,12 +21,9 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
-    private final ProductMapper productMapper;
 
-    public ProductServiceImpl(ProductRepository productRepository,
-                              ProductMapper productMapper) {
+    public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
-        this.productMapper = productMapper;
     }
 
     @Override
@@ -35,15 +31,19 @@ public class ProductServiceImpl implements ProductService {
         log.info("Start save product into database");
         if (productReqDTO.getQuantity() > 0) {
             if (productReqDTO.isCreated()) {
-                Product product = productMapper.toEntity(productReqDTO);
+                Product product = new Product();
+                product.setProductName(productReqDTO.getProductName());
+                product.setCategory(productReqDTO.getCategory());
+                product.setQuantity(productReqDTO.getQuantity());
+                product.setUsername(productReqDTO.getUsername());
                 product.setProductStatus(ProductStatus.WAITING_FOR_APPROVE);
                 productRepository.save(product);
                 return product;
             } else {
-                Optional<Product> productOptional = productRepository.findByProductId(productReqDTO.getProductId());
+                Optional<Product> productOptional = productRepository.findById(productReqDTO.getProductId());
                 if (productOptional.isPresent() && !productOptional.get().isDelFrag()) {
                     Product existedProduct = productOptional.get();
-                    Long productId = existedProduct.getProductId();
+                    Long productId = existedProduct.getId();
                     existedProduct.setProductStatus(ProductStatus.WAITING_FOR_APPROVE);
                     existedProduct.setProductName(productReqDTO.getProductName());
                     existedProduct.setCategory(productReqDTO.getCategory());
@@ -51,11 +51,10 @@ public class ProductServiceImpl implements ProductService {
                     List<ProductImage> productImages = new ArrayList<>();
                     productReqDTO.getImages().forEach(imageURL -> {
                         ProductImage productImage = new ProductImage();
-                        productImage.setProductId(productId);
                         productImage.setImageUrl(imageURL);
                         productImages.add(productImage);
                     });
-                    existedProduct.setProductImages(productImages);
+
                     productRepository.save(existedProduct);
                     return existedProduct;
                 }
@@ -73,7 +72,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getProductDetail(Long id) {
-        Optional<Product> product = productRepository.findByProductId(id);
+        Optional<Product> product = productRepository.findById(id);
         return product.orElse(null);
     }
 }

@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 public class Payment extends AbstractAuditingEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long paymentId;
+    private Long id;
 
 
     @ManyToOne

@@ -14,7 +14,7 @@ public class Password extends AbstractAuditingEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long Id;
+    private Long id;
 
     @NotNull
     @Column(name = "password", nullable = false)

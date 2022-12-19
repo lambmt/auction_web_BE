@@ -11,9 +11,8 @@ import javax.persistence.*;
 @Setter
 public class ProductImage {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name = "product_image_id")
-    private Long productImageId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     private Long productId;
 

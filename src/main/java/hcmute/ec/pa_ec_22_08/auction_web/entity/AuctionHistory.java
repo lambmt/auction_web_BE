@@ -16,6 +16,8 @@ public class AuctionHistory{
     private Long id;
 
     private String buyerId;
+    @ManyToOne
+    @JoinColumn(name = "auction_id")
     private Auction auction;
     private BigDecimal price;
 }
