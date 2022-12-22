@@ -45,9 +45,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable();
         http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/auction/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/auction/**").permitAll()
-//                .requestMatchers(new AntPathRequestMatcher("/auction/**")).authenticated()
+                .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/auth/**").permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/auction-web/**")).authenticated()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager(), passwordRepository))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()))

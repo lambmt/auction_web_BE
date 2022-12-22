@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/auction")
+@RequestMapping("/auction-web")
 public class AuctionController {
     Logger log = LoggerFactory.getLogger(AuctionController.class);
 
