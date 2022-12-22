@@ -8,4 +8,6 @@ public class MessageConstant {
     public static final String ENTITY_NOT_FOUND = "Entity not found ";
     public static final String SIGN_UP_SUCCESS = "User sign up successfully";
     public static final String SIGN_IN_SUCCESS = "User sign in successfully";
+    public static final String USER_EXISTED = "User is existed! Please try again";
+    public static final String ROLE_NOT_AVAILABLE = "Role not available";
 }

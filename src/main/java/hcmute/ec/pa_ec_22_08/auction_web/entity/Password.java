@@ -19,4 +19,8 @@ public class Password extends AbstractAuditingEntity{
     @NotNull
     @Column(name = "password", nullable = false)
     private String password;
+
+    public Password(String password) {
+        this.password = password;
+    }
 }

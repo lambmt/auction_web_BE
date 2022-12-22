@@ -5,23 +5,28 @@ import hcmute.ec.pa_ec_22_08.auction_web.enumuration.Role;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "User")
 @Getter
 @Setter
 @ToString
-public class User extends AbstractAuditingEntity{
+public class User implements Serializable, Comparable<User> {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotNull
@@ -74,8 +79,26 @@ public class User extends AbstractAuditingEntity{
     @Column(name = "del_frag")
     private boolean delFrag;
 
+    @CreatedDate
+    @Column(name = "created_date", updatable = true)
+    protected LocalDateTime createdDate;
 
-    @OneToMany
-    @JoinColumn(name = "product_id")
-    private List<Product> products;
+    @CreatedBy
+    @Column(name = "created_by", length = 50, updatable = false)
+    protected String createdBy;
+
+    @LastModifiedDate
+    @Column(name = "updated_date")
+    protected LocalDateTime updatedDate;
+
+    @LastModifiedBy
+    @Column(name = "updated_by", length = 50)
+    protected String updatedBy;
+
+    @Override
+    public int compareTo(User user) {
+        LocalDateTime date1 = this.getCreatedDate();
+        LocalDateTime date2 = user.getCreatedDate();
+        return date1.compareTo(date2);
+    }
 }
