@@ -16,11 +16,11 @@ public class AuctionHistory {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String buyerId;
+    private String buyerName;
 
     @ManyToOne
-    @JoinColumn(name = "auction_auction_id")
-    private Auction auction;
+    @JoinColumn(name = "auction_id")
+    private Auction auctionHistory;
     private BigDecimal price;
 
     private LocalDateTime createdDate;

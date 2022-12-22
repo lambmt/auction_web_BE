@@ -34,6 +34,9 @@ public class Auction {
     @OneToOne(mappedBy = "auctionOrder")
     private OrderProduct orderProduct;
 
+    @OneToMany(mappedBy = "auctionHistory")
+    private AuctionHistory auctionHistory;
+
     private LocalDateTime startTime;
     private LocalDateTime finishTime;
     private int numOfDayAuction;

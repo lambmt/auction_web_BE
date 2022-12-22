@@ -1,10 +1,15 @@
 package hcmute.ec.pa_ec_22_08.auction_web.service.impl;
 
+import hcmute.ec.pa_ec_22_08.auction_web.constant.MessageConstant;
 import hcmute.ec.pa_ec_22_08.auction_web.dto.req.AuctionReqDTO;
+import hcmute.ec.pa_ec_22_08.auction_web.dto.req.BidAuctionReqDTO;
+import hcmute.ec.pa_ec_22_08.auction_web.dto.req.SearchAuctionDTO;
 import hcmute.ec.pa_ec_22_08.auction_web.dto.res.AuctionResDTO;
 import hcmute.ec.pa_ec_22_08.auction_web.entity.Auction;
+import hcmute.ec.pa_ec_22_08.auction_web.entity.AuctionHistory;
 import hcmute.ec.pa_ec_22_08.auction_web.entity.ProductImage;
 import hcmute.ec.pa_ec_22_08.auction_web.enumuration.AuctionStatus;
+import hcmute.ec.pa_ec_22_08.auction_web.repository.AuctionHistoryRepository;
 import hcmute.ec.pa_ec_22_08.auction_web.repository.AuctionRepository;
 import hcmute.ec.pa_ec_22_08.auction_web.repository.ProductImageRepository;
 import hcmute.ec.pa_ec_22_08.auction_web.repository.UserRepository;
@@ -13,6 +18,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -25,12 +32,16 @@ public class AuctionServiceImpl implements AuctionService {
     private final AuctionRepository auctionRepository;
     private final ProductImageRepository productImageRepository;
     private final UserRepository userRepository;
+    private final AuctionHistoryRepository auctionHistoryRepository;
 
     public AuctionServiceImpl(AuctionRepository auctionRepository,
-                              ProductImageRepository productImageRepository, UserRepository userRepository) {
+                              ProductImageRepository productImageRepository,
+                              UserRepository userRepository,
+                              AuctionHistoryRepository auctionHistoryRepository) {
         this.auctionRepository = auctionRepository;
         this.productImageRepository = productImageRepository;
         this.userRepository = userRepository;
+        this.auctionHistoryRepository = auctionHistoryRepository;
     }
 
     @Override
@@ -100,5 +111,51 @@ public class AuctionServiceImpl implements AuctionService {
             });
         }
         return auctionResDTOS;
+    }
+
+    @Override
+    public List<AuctionResDTO> getListAllAuction(SearchAuctionDTO searchAuctionDTO) {
+        List<AuctionResDTO> auctionResDTOS = new ArrayList<>();
+        if (searchAuctionDTO.getKeyword() == null
+                && searchAuctionDTO.getCategory() ==null
+                && searchAuctionDTO.getPriceFrom() ==null
+                && searchAuctionDTO.getPriceTo() ==null) {
+            List<Auction> auctions = auctionRepository.findAll();
+            auctions.sort(Comparator.comparing(Auction::getStartTime).reversed());
+        }
+        return null;
+    }
+
+    @Override
+    public Auction viewDetailAuction(Long auctionId) {
+        Optional<Auction> auctionOtp = auctionRepository.findById(auctionId);
+        return auctionOtp.orElse(null);
+    }
+
+    @Override
+    public Auction bidAuction(BidAuctionReqDTO bidAuctionReqDTO) throws Exception {
+        Optional<Auction> auctionOtp = auctionRepository.findById(bidAuctionReqDTO.getAuctionId());
+        if (auctionOtp.isPresent()) {
+            Auction auction = auctionOtp.get();
+            BigDecimal currentPrice = auction.getEndPrice();
+            LocalDateTime now = LocalDateTime.now();
+            if (now.isAfter(auction.getFinishTime())) {
+                if (currentPrice.compareTo(bidAuctionReqDTO.getPrice()) < 0) {
+                    auction.setEndPrice(bidAuctionReqDTO.getPrice());
+                    AuctionHistory auctionHistory = new AuctionHistory();
+                    auctionHistory.setAuction(auction);
+                    auctionHistory.setPrice(bidAuctionReqDTO.getPrice());
+                    auctionHistory.setBuyerName(bidAuctionReqDTO.getUsername());
+                    auctionHistory.setCreatedDate(now);
+                    auctionHistory.setCreatedBy(bidAuctionReqDTO.getUsername());
+                    auctionHistory.setUpdatedDate(now);
+                    auctionHistory.setUpdatedBy(bidAuctionReqDTO.getUsername());
+
+                    auctionHistoryRepository.save(auctionHistory);
+                } else throw new Exception("Price must be more than current");
+            } else throw new Exception("Auction is closed");
+
+        } else throw new Exception(MessageConstant.ENTITY_NOT_FOUND);
+        return null;
     }
 }

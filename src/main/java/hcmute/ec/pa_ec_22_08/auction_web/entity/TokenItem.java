@@ -20,7 +20,7 @@ public class TokenItem {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String userId;
+    private String username;
     private Role role;
     private String token;
     private String refreshToken;
