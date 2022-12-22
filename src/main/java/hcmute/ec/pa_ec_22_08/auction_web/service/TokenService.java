@@ -16,7 +16,7 @@ public class TokenService {
     }
 
     public TokenItem getTokenItem(String tokenId) {
-        Optional<TokenItem> otp = tokenItemRepository.findByTokenId(tokenId);
+        Optional<TokenItem> otp = tokenItemRepository.findByToken(tokenId);
         return otp.orElseGet(() -> null);
     }
 }

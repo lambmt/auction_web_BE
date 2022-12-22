@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface TokenItemRepository extends JpaRepository<TokenItem, Long> {
-    Optional<TokenItem> findByTokenId(String tokenId);
+    Optional<TokenItem> findByToken(String token);
 }

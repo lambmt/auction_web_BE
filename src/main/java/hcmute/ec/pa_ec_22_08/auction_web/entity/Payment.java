@@ -6,23 +6,28 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "payment")
 @Getter
 @Setter
 @ToString
-public class Payment extends AbstractAuditingEntity{
+public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private User userPayment;
 
     private String walletId;
     private BigDecimal credit;
     private boolean isActive;
+
+    private LocalDateTime createdDate;
+    private String createdBy;
+    private LocalDateTime updatedDate;
+    private String updatedBy;
 }

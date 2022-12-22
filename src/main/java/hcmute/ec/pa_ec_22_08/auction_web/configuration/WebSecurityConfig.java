@@ -1,5 +1,6 @@
 package hcmute.ec.pa_ec_22_08.auction_web.configuration;
 
+import hcmute.ec.pa_ec_22_08.auction_web.repository.PasswordRepository;
 import hcmute.ec.pa_ec_22_08.auction_web.service.impl.TokenAuthenticationFilterImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +33,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     TokenAuthenticationFilterImpl tokenAuthenticationFilter;
 
+    @Autowired
+    PasswordRepository passwordRepository;
+
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -41,15 +45,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable();
         http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/auction/auth/login").permitAll()
-                .antMatchers(HttpMethod.POST, "/auction/auth/register").permitAll()
-                .requestMatchers(new AntPathRequestMatcher("/auction/**")).authenticated()
+                .antMatchers(HttpMethod.POST, "/auction/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/auction/**").permitAll()
+//                .requestMatchers(new AntPathRequestMatcher("/auction/**")).authenticated()
                 .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(), passwordRepository))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()))
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        /*http.addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);*/
     }
 
     @Override

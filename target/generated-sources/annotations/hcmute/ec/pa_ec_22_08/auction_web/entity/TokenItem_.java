@@ -8,7 +8,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
 @StaticMetamodel(TokenItem.class)
-public abstract class TokenItem_ extends hcmute.ec.pa_ec_22_08.auction_web.entity.AbstractAuditingEntity_ {
+public abstract class TokenItem_ {
 
 	public static volatile SingularAttribute<TokenItem, Role> role;
 	public static volatile SingularAttribute<TokenItem, LocalDateTime> createdDate;

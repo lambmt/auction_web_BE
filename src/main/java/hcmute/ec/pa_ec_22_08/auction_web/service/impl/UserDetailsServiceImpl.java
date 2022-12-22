@@ -3,6 +3,7 @@ package hcmute.ec.pa_ec_22_08.auction_web.service.impl;
 import hcmute.ec.pa_ec_22_08.auction_web.constant.MessageConstant;
 import hcmute.ec.pa_ec_22_08.auction_web.entity.User;
 import hcmute.ec.pa_ec_22_08.auction_web.enumuration.Role;
+import hcmute.ec.pa_ec_22_08.auction_web.repository.PasswordRepository;
 import hcmute.ec.pa_ec_22_08.auction_web.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,8 +18,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    public UserDetailsServiceImpl(UserRepository userRepository) {
+    private final PasswordRepository passwordRepository;
+
+    public UserDetailsServiceImpl(UserRepository userRepository, PasswordRepository passwordRepository) {
         this.userRepository = userRepository;
+        this.passwordRepository = passwordRepository;
     }
 
     @Override
@@ -27,7 +31,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(MessageConstant.USER_NOT_FOUND + usernameOrEmail));
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
-                user.getPassword().getPassword(),
+                passwordRepository.findByUsername(user.getUsername()).getPassword(),
                 this.mapRolesToAuthorities(user.getRole())
         );
     }

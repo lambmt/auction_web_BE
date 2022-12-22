@@ -5,9 +5,9 @@ import hcmute.ec.pa_ec_22_08.auction_web.dto.req.LoginDTO;
 import hcmute.ec.pa_ec_22_08.auction_web.dto.req.SignUpDTO;
 import hcmute.ec.pa_ec_22_08.auction_web.dto.res.TokenRes;
 import hcmute.ec.pa_ec_22_08.auction_web.entity.Password;
-import hcmute.ec.pa_ec_22_08.auction_web.entity.TokenItem;
 import hcmute.ec.pa_ec_22_08.auction_web.entity.User;
 import hcmute.ec.pa_ec_22_08.auction_web.enumuration.Role;
+import hcmute.ec.pa_ec_22_08.auction_web.repository.PasswordRepository;
 import hcmute.ec.pa_ec_22_08.auction_web.repository.TokenItemRepository;
 import hcmute.ec.pa_ec_22_08.auction_web.repository.UserRepository;
 import hcmute.ec.pa_ec_22_08.auction_web.service.LoginService;
@@ -23,10 +23,14 @@ public class LoginServiceImpl implements LoginService {
 
     private final UserRepository userRepository;
     private final TokenItemRepository tokenItemRepository;
+    private final PasswordRepository passwordRepository;
 
-    public LoginServiceImpl(UserRepository userRepository, TokenItemRepository tokenItemRepository) {
+    public LoginServiceImpl(UserRepository userRepository,
+                            TokenItemRepository tokenItemRepository,
+                            PasswordRepository passwordRepository) {
         this.userRepository = userRepository;
         this.tokenItemRepository = tokenItemRepository;
+        this.passwordRepository = passwordRepository;
     }
 
     @Override
@@ -48,8 +52,7 @@ public class LoginServiceImpl implements LoginService {
             newUser.setLastName(signUpDTO.getLastName());
             newUser.setEmail(signUpDTO.getEmail());
             String passwordEncoder = signUpDTO.getPassword();
-            Password password = new Password(passwordEncoder);
-            newUser.setPassword(password);
+            Password password = new Password(passwordEncoder, signUpDTO.getUsername());
             newUser.setUsername(signUpDTO.getUsername());
             newUser.setRole(signUpDTO.getRole());
             newUser.setCreatedDate(now);
@@ -59,7 +62,7 @@ public class LoginServiceImpl implements LoginService {
 
             userRepository.save(newUser);
         }
-        return null;
+        return new TokenRes();
     }
 
     @Override
@@ -68,7 +71,7 @@ public class LoginServiceImpl implements LoginService {
         Optional<User> userOtp = userRepository.findByUsernameOrEmail(loginDTO.getUsernameOrEmail(), loginDTO.getUsernameOrEmail());
         if (userOtp.isPresent()) {
             User existedUser = userOtp.get();
-            if (loginDTO.getPassword().equals(existedUser.getPassword().getPassword())) {
+            if (loginDTO.getPassword().equals(passwordRepository.findByUsername(existedUser.getUsername()).getPassword())) {
                 String token = genToken();
                 return TokenRes.of(existedUser.getUsername(), existedUser.getRole(), token, token, true);
             } else {

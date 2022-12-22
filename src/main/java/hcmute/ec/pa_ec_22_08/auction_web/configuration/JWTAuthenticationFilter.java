@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hcmute.ec.pa_ec_22_08.auction_web.constant.VariableConstant;
 import hcmute.ec.pa_ec_22_08.auction_web.entity.User;
+import hcmute.ec.pa_ec_22_08.auction_web.repository.PasswordRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,8 +23,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private AuthenticationManager authenticationManager;
 
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+    private final PasswordRepository passwordRepository;
+
+    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, PasswordRepository passwordRepository) {
         this.authenticationManager = authenticationManager;
+        this.passwordRepository = passwordRepository;
 
         setFilterProcessesUrl("/auction/auth/login");
     }
@@ -38,7 +42,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             user.getUsername(),
-                            user.getPassword(),
+                            passwordRepository.findByUsername(user.getUsername()),
                             new ArrayList<>())
             );
         } catch (IOException e) {

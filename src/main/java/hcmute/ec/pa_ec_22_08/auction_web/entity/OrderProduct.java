@@ -13,14 +13,14 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @ToString
-public class OrderProduct extends AbstractAuditingEntity {
+public class OrderProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @OneToOne
+    @JoinColumn(name = "auction_id")
+    private Auction auctionOrder;
 
     private String sender;
     private String receiver;

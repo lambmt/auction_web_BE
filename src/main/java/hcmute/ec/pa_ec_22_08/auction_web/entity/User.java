@@ -5,15 +5,10 @@ import hcmute.ec.pa_ec_22_08.auction_web.enumuration.Role;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -22,21 +17,23 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public class User implements Serializable, Comparable<User> {
+public class User {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long userId;
 
     @NotNull
     @Size(max = 64)
     @Column(name = "username", nullable = true)
     private String username;
 
-    @OneToOne
-    @JoinColumn(name = "password_id")
+    @OneToOne(mappedBy = "userPassword")
     private Password password;
+
+    @OneToOne(mappedBy = "userPayment")
+    private Payment payment;
 
     @NotNull
     @Size(max = 64)
@@ -79,26 +76,9 @@ public class User implements Serializable, Comparable<User> {
     @Column(name = "del_frag")
     private boolean delFrag;
 
-    @CreatedDate
-    @Column(name = "created_date", updatable = true)
-    protected LocalDateTime createdDate;
+    private LocalDateTime createdDate;
+    private String createdBy;
+    private LocalDateTime updatedDate;
+    private String updatedBy;
 
-    @CreatedBy
-    @Column(name = "created_by", length = 50, updatable = false)
-    protected String createdBy;
-
-    @LastModifiedDate
-    @Column(name = "updated_date")
-    protected LocalDateTime updatedDate;
-
-    @LastModifiedBy
-    @Column(name = "updated_by", length = 50)
-    protected String updatedBy;
-
-    @Override
-    public int compareTo(User user) {
-        LocalDateTime date1 = this.getCreatedDate();
-        LocalDateTime date2 = user.getCreatedDate();
-        return date1.compareTo(date2);
-    }
 }

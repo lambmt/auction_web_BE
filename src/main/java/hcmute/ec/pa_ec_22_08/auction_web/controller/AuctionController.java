@@ -1,14 +1,15 @@
 package hcmute.ec.pa_ec_22_08.auction_web.controller;
 
 import hcmute.ec.pa_ec_22_08.auction_web.dto.req.AuctionReqDTO;
+import hcmute.ec.pa_ec_22_08.auction_web.dto.res.AuctionResDTO;
 import hcmute.ec.pa_ec_22_08.auction_web.service.AuctionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/auction")
@@ -26,4 +27,11 @@ public class AuctionController {
         log.info("REST ful api to create auction slot");
         return ResponseEntity.ok(auctionService.createAuction(auctionReqDTO));
     }
+
+    @GetMapping("/list-latest-auction")
+    public ResponseEntity<List<AuctionResDTO>> getListLatestAuction() {
+        log.info("REST ful api to get list latest auction on time {}", LocalDateTime.now());
+        return ResponseEntity.ok(auctionService.getListLatestAuction());
+    }
+
 }

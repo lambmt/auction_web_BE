@@ -14,7 +14,9 @@ public class ProductImage {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Long productId;
+    @ManyToOne
+    @JoinColumn(name = "auction_id")
+    private Auction auctionImages;
 
     private String imageUrl;
 }
