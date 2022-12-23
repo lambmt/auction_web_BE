@@ -47,7 +47,7 @@ name: Build and Deploy to Cloud Run
 on:
   push:
     branches: [ "master" ]
-  workflow_dispatch:s
+  workflow_dispatch:
 
 env:
   PROJECT_ID: auction-372014 # TODO: update Google Cloud project id
