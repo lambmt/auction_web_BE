@@ -16,7 +16,7 @@ public abstract class TokenItem_ {
 	public static volatile SingularAttribute<TokenItem, String> createdBy;
 	public static volatile SingularAttribute<TokenItem, Long> id;
 	public static volatile SingularAttribute<TokenItem, LocalDateTime> updatedDate;
-	public static volatile SingularAttribute<TokenItem, String> userId;
+	public static volatile SingularAttribute<TokenItem, String> username;
 	public static volatile SingularAttribute<TokenItem, String> token;
 	public static volatile SingularAttribute<TokenItem, String> refreshToken;
 
@@ -26,7 +26,7 @@ public abstract class TokenItem_ {
 	public static final String CREATED_BY = "createdBy";
 	public static final String ID = "id";
 	public static final String UPDATED_DATE = "updatedDate";
-	public static final String USER_ID = "userId";
+	public static final String USERNAME = "username";
 	public static final String TOKEN = "token";
 	public static final String REFRESH_TOKEN = "refreshToken";
 

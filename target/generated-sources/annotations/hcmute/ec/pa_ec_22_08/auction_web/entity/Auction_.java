@@ -18,6 +18,7 @@ public abstract class Auction_ {
 	public static volatile SingularAttribute<Auction, BigDecimal> startPrice;
 	public static volatile SingularAttribute<Auction, Boolean> delFrag;
 	public static volatile SingularAttribute<Auction, LocalDateTime> finishTime;
+	public static volatile ListAttribute<Auction, AuctionHistory> historys;
 	public static volatile SingularAttribute<Auction, String> updatedBy;
 	public static volatile SingularAttribute<Auction, Integer> numOfDayAuction;
 	public static volatile SingularAttribute<Auction, BigDecimal> stepPrice;
@@ -39,6 +40,7 @@ public abstract class Auction_ {
 	public static final String START_PRICE = "startPrice";
 	public static final String DEL_FRAG = "delFrag";
 	public static final String FINISH_TIME = "finishTime";
+	public static final String HISTORYS = "historys";
 	public static final String UPDATED_BY = "updatedBy";
 	public static final String NUM_OF_DAY_AUCTION = "numOfDayAuction";
 	public static final String STEP_PRICE = "stepPrice";

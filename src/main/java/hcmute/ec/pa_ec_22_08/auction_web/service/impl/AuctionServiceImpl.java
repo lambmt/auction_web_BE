@@ -143,7 +143,7 @@ public class AuctionServiceImpl implements AuctionService {
                 if (currentPrice.compareTo(bidAuctionReqDTO.getPrice()) < 0) {
                     auction.setEndPrice(bidAuctionReqDTO.getPrice());
                     AuctionHistory auctionHistory = new AuctionHistory();
-                    auctionHistory.setAuction(auction);
+                    auctionHistory.setAuctionHistory(auction);
                     auctionHistory.setPrice(bidAuctionReqDTO.getPrice());
                     auctionHistory.setBuyerName(bidAuctionReqDTO.getUsername());
                     auctionHistory.setCreatedDate(now);

@@ -21,6 +21,7 @@ public class AuctionHistory {
     @ManyToOne
     @JoinColumn(name = "auction_id")
     private Auction auctionHistory;
+
     private BigDecimal price;
 
     private LocalDateTime createdDate;

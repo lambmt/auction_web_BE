@@ -35,7 +35,7 @@ public class Auction {
     private OrderProduct orderProduct;
 
     @OneToMany(mappedBy = "auctionHistory")
-    private AuctionHistory auctionHistory;
+    private List<AuctionHistory> historys;
 
     private LocalDateTime startTime;
     private LocalDateTime finishTime;

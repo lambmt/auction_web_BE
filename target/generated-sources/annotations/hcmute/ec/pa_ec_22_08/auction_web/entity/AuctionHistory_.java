@@ -12,21 +12,21 @@ public abstract class AuctionHistory_ {
 
 	public static volatile SingularAttribute<AuctionHistory, LocalDateTime> createdDate;
 	public static volatile SingularAttribute<AuctionHistory, String> updatedBy;
+	public static volatile SingularAttribute<AuctionHistory, Auction> auctionHistory;
 	public static volatile SingularAttribute<AuctionHistory, String> createdBy;
 	public static volatile SingularAttribute<AuctionHistory, BigDecimal> price;
 	public static volatile SingularAttribute<AuctionHistory, Long> id;
 	public static volatile SingularAttribute<AuctionHistory, LocalDateTime> updatedDate;
-	public static volatile SingularAttribute<AuctionHistory, String> buyerId;
-	public static volatile SingularAttribute<AuctionHistory, Auction> auction;
+	public static volatile SingularAttribute<AuctionHistory, String> buyerName;
 
 	public static final String CREATED_DATE = "createdDate";
 	public static final String UPDATED_BY = "updatedBy";
+	public static final String AUCTION_HISTORY = "auctionHistory";
 	public static final String CREATED_BY = "createdBy";
 	public static final String PRICE = "price";
 	public static final String ID = "id";
 	public static final String UPDATED_DATE = "updatedDate";
-	public static final String BUYER_ID = "buyerId";
-	public static final String AUCTION = "auction";
+	public static final String BUYER_NAME = "buyerName";
 
 }
 
